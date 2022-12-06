@@ -1,0 +1,20 @@
+body {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.grid-container {
+    display: flex;
+    flex-wrap: wrap;
+    width: 85vh;
+    height: 85vh;
+    background-color: rgb(184, 184, 184);
+}
+
+grid-block:hover {
+    background-color: pink;
+}
