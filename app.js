@@ -19,10 +19,8 @@ function drawGrid() {
             div.className = `g${i}`
             div.style.cssText = `width: ${gridDimension}px;
             height: ${gridDimension}px; background-color: black;`
-            //box-shadow: inset 0 0 5px #000F;
             div.classList.add('block-element');
         }
-        console.log("hi");
     } else { 
         for (let i = 1; i <= num*num; i++) {
             let div = gridContainerDiv.appendChild(document.createElement('div'))
@@ -40,7 +38,13 @@ drawGrid();
 let blocks = document.querySelectorAll('.block-element');
 
 function hover(e) {
-    this.style.backgroundColor = 'white'
+    if (this.classList.contains('block-visited')) {
+        let val = randomRGBNumber(true, this)
+        this.style.backgroundColor = val;
+    } else {
+        this.style.backgroundColor = randomRGBNumber(false);
+        this.classList.add('block-visited'); 
+    }
 }
 
 function btnClicked(e) {
@@ -53,7 +57,6 @@ function btnClicked(e) {
 }
 
 function formSubmit(e) {
-    console.log(e.type.toUpperCase(), e.target.id, e.target.value);
     if (e.key === 'Enter') {
         err.style.display = 'none';
         if (Number(e.target.value) > 100) {
@@ -61,12 +64,57 @@ function formSubmit(e) {
             return;
         }
         num = Number(e.target.value);
-        console.log(e.target.value);
         drawn = true;
         drawGrid();
         blocks = document.querySelectorAll('.block-element');
         blocks.forEach(block => block.addEventListener('mouseover', hover));
         e.preventDefault();
+    }
+}
+
+function randomRGBNumber(visited, blockObject) {
+    if (!visited) {
+        let rgbString = 'rgb(';
+        for(let i = 0; i < 3; i++) {
+            if (i != 2) {
+                rgbString += Math.floor(Math.random() * 256) + ', ';
+            } else {
+                rgbString += Math.floor(Math.random() * 256) + ')';
+            }
+        }
+        return rgbString;
+    } else {
+        let newRgbString = blockObject.style.backgroundColor;
+        let colorArr = newRgbString.slice(
+            newRgbString.indexOf("(") + 1, 
+            newRgbString.indexOf(")")
+        ).split(", ");
+        for (let i = 0; i < 3; i++) {
+            if (colorArr[i] !== '0') {
+                let minusTenPercent = Math.floor(Number(colorArr[i]) - (Number(colorArr[i]) * 0.3));
+                if (minusTenPercent <= 0) {
+                    colorArr[i] = '0';
+                } else {
+                    colorArr[i] = minusTenPercent;
+                }
+            }
+        }
+
+        if (colorArr[0] == '0' && colorArr[1] == '0' && colorArr[2] == '0') {
+            setTimeout(() => {
+                blockObject.classList.remove('block-visited');
+            }, 2000);
+        }
+
+        let returnRgbString = 'rgb(';
+        for(let i = 0; i < 3; i++) {
+            if (i != 2) {
+                returnRgbString+= colorArr[i] + ', ';
+            } else {
+                returnRgbString += colorArr[i] + ')';
+            }
+        }
+        return returnRgbString;
     }
 }
 
