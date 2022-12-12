@@ -10,7 +10,12 @@
 </head>
 <body>
     <button class="num-squares">
-        <div class="num-squares-text">change square density.</div>
+        <div class="num-squares-text">change grid dimensions.</div>
+        <form action="" id="grid-form">
+            <label for="density"></label>
+            <input type="number" id="density" placeholder="enter grid dimensions" min = "1" max = "100">
+            <span id="input-error">Max input = 100</span>
+        </form>
     </button>
     <div class="grid-container"></div>
 </body>
