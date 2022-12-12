@@ -3,7 +3,7 @@ body {
     padding: 0;
     display: flex;
     flex-direction: column;
-    gap: 2em;
+    gap: 1em;
     justify-content: center;
     align-items: center;
     height: 100vh;
@@ -11,7 +11,12 @@ body {
 }
 
 .num-squares {
+    display: flex;
+    justify-content: center;
     padding: 1em;
+    margin-top: 1em;
+    width: 350px;
+    height: 50px;
     border-radius: 200px;
     border: none;
     background-color: rgb(255, 123, 0);
@@ -20,33 +25,48 @@ body {
     transition: all 0.2s ease-in-out;
 }
 
-@keyframes make-sqr {
+.num-squares-onclick {
+    animation: sqr 0.4s;
+    animation-fill-mode: forwards;
+}
+
+@keyframes sqr {
     100% {
         border-radius: 0;
+        /* padding: 0.5em 2em 0.5em 2em; */
     }
 }
 
-.num-squares-text {
-    transition: 1s;
-}
-
 .num-squares:hover {
-    scale: 1.2;
+    scale: 1.05;
 }
 
-.num-squares-clicked{
-    animation: make-sqr 0.1s ease-in;
+.num-squares-text-onclick {
+    animation: r-t-l 0.5s ease-out;
+    animation-fill-mode: forwards;
 }
 
-.num-squares-text-clicked{
-    animation: right-to-left 1s ease-in-out;
-}
-
-@keyframes right-to-left {
+@keyframes r-t-l {
     100% {
         transform: translateX(-100%);
         opacity: 0%;
     }
+}
+
+#input-error {
+    color: rgb(206, 0, 0);
+}
+
+#grid-form {
+    position: relative;
+    bottom: 6px;
+}
+
+#grid-form input{
+    width: 145px;
+    padding: 0.5em;
+    border: none;
+    border-radius: 20px;
 }
 
 .grid-container {
